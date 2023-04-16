@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                             onCheckedChange = { checkedState3.value = it }
                         )
                         Text(text = "Neutral Gender")
-                        Button(onClick = { /* Do something! */ }) {
+                        Button(onClick = { /* Do something */ }) {
                             Text("Next")
                         }
                     }
@@ -69,4 +69,8 @@ fun DefaultPreview() {
     ReplacementTheme {
         Greeting("Android")
     }
+}
+
+fun Clicked(){
+
 }
