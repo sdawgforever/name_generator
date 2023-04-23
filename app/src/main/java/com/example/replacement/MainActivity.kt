@@ -1,5 +1,6 @@
 package com.example.replacement
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,11 +8,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.semantics.Role.Companion.Checkbox
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.replacement.ui.theme.ReplacementTheme
 
@@ -25,6 +28,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+                    var nameState : MutableState<String> = remember { mutableStateOf("None") }
+                    if(nameState.value.equals("None")){
                     Column {
                         val checkedState = remember { mutableStateOf(false) }
                         Text(text = "Please check the box of the type of name you want.")
@@ -46,11 +51,34 @@ class MainActivity : ComponentActivity() {
                             onCheckedChange = { checkedState3.value = it }
                         )
                         Text(text = "Neutral Gender")
-                        Button(onClick = { /* Do something */ }) {
-                            Text("Next")
+
+                        Button(onClick = {
+                           if(checkedState.value == true){
+                               nameState.value = "Female"
+                           }else if(checkedState2.value == true){
+                                nameState.value = "Male"
+                            }else if(checkedState3.value == true){
+                                nameState.value = "Neutral Gender"
+                            }
+
+                        }
+                        )
+                        {
+                            Text("Generate Names")
                         }
                     }
+                    }
+                    if(nameState.value.equals("Male")){
+                        Male()
+                    }
 
+                    if(nameState.value.equals("Female")){
+                        Female()
+                    }
+
+                    if(nameState.value.equals("Neutral Gender")){
+                        NeutralGender()
+                    }
                 }
             }
         }
@@ -70,7 +98,19 @@ fun DefaultPreview() {
         Greeting("Android")
     }
 }
-
-fun Clicked(){
-
+@Composable
+fun Female(){
+   Text(text = "Zoya, " +
+            "Danielle, " +
+            "Ida, " +
+            "Holly, " +
+            "Giana")
+}
+@Composable
+fun Male(){
+    Text(text = "Andrew, Chris, Alfonso, Matthew, Walter")
+}
+@Composable
+fun NeutralGender(){
+    Text(text = "Sloan, Sam, Madison, Jordan")
 }
